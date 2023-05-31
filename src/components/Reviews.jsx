@@ -4,16 +4,16 @@ import ReviewCard from "./ReviewCard";
 
 const Reviews = () => {
   const [currReviews, setCurrReviews] = useState([]);
-
-  if (currReviews.length === 0) {
-    return <h1>Loading....</h1>;
-  }
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchAllReviews().then(({ reviews }) => {
       setCurrReviews(reviews);
+      setIsLoading(false);
     });
   }, []);
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <section>
