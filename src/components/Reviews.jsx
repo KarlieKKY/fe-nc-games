@@ -5,6 +5,10 @@ import ReviewCard from "./ReviewCard";
 const Reviews = () => {
   const [currReviews, setCurrReviews] = useState([]);
 
+  if (currReviews.length === 0) {
+    return <h1>Loading....</h1>;
+  }
+
   useEffect(() => {
     fetchAllReviews().then(({ reviews }) => {
       setCurrReviews(reviews);
