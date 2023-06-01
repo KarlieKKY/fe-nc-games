@@ -1,3 +1,5 @@
+import { convertDate } from "../../utils/convertDate";
+
 const ReviewCard = ({
   title,
   designer,
@@ -7,12 +9,7 @@ const ReviewCard = ({
   vote,
   comment_count,
 }) => {
-  let date = new Date(created_at);
-  let dd = String(date.getDate()).padStart(2, "0");
-  let mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
-  let yyyy = date.getFullYear();
-
-  let formattedDate = mm + "-" + dd + "-" + yyyy;
+  const formattedDate = convertDate(created_at);
 
   return (
     <>
