@@ -59,6 +59,9 @@ button:focus-visible {
 img {
   max-width: 60%;
 }
+.error {
+  color: rgb(229, 97, 97);
+}
 
 @media (prefers-color-scheme: light) {
   :root {

@@ -21,3 +21,14 @@ export const fetchAllComments = (id) => {
     return response.data;
   });
 };
+
+export const fetchVotes = (review_id) => {
+  return gamesApi.get(`/api/reviews/${review_id}`).then((response) => {
+    return response.data.review.votes;
+  });
+};
+
+export const increaseVotes = (review_id) => {
+  return gamesApi.patch(`/api/reviews/${review_id}`, { inc_votes: 1 });
+  // .catch((err) => console.log(err));
+};
