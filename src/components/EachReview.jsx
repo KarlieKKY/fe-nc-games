@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import { fetchReviewById } from "../../utils/utils";
 import { useEffect, useState } from "react";
 import Comments from "./Comments";
+import { convertDate } from "../../utils/convertDate";
 
 const EachReview = () => {
   const { review_id } = useParams();
@@ -17,12 +18,7 @@ const EachReview = () => {
 
   if (isLoading) return <p>Loading....</p>;
 
-  let date = new Date(singleReview.created_at);
-  let dd = String(date.getDate()).padStart(2, "0");
-  let mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
-  let yyyy = date.getFullYear();
-
-  let formattedDate = mm + "-" + dd + "-" + yyyy;
+  const formattedDate = convertDate(singleReview.created_at);
 
   return (
     <article>
