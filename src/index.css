@@ -50,18 +50,19 @@ button {
 button:hover {
   border-color: #646cff;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 
-/* come back later */
+/* ---- come back later ---- */
+button.active {
+  outline: 4px auto -webkit-focus-ring-color;
+  background-color: #535ae5;
+}
 img {
   max-width: 60%;
 }
 .error {
   color: rgb(229, 97, 97);
 }
+/* ---- come back later ---- */
 
 @media (prefers-color-scheme: light) {
   :root {

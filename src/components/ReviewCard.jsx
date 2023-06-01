@@ -16,30 +16,30 @@ const ReviewCard = ({
   const formattedDate = convertDate(created_at);
   const [votes, setVotes] = useState(vote);
   const [isError, setIsError] = useState(false);
-  const [hasClicked, setHasClicked] = useState(false);
-  const [hasClickedDownVote, setHasClickedDownVote] = useState(false);
+  const [likeState, setLikeState] = useState(0);
+
   useEffect(() => {
     fetchVotes(id).then((currVotes) => {
       setVotes(currVotes);
     });
   }, []);
 
-  const upVotesHandler = () => {
-    setVotes((currentVotes) => currentVotes + 1);
+  const voteHandler = (voteChange) => {
     setIsError(false);
-    setHasClicked(true);
-    increaseVotes(id, 1).catch(() => {
-      setVotes((currentVotes) => currentVotes - 1);
-      setIsError(true);
-    });
-  };
-
-  const downVotesHandler = () => {
-    setVotes((currentVotes) => currentVotes - 1);
-    setIsError(false);
-    setHasClickedDownVote(true);
-    increaseVotes(id, -1).catch(() => {
-      setVotes((currentVotes) => currentVotes + 1);
+    let increment;
+    if (likeState === 0) {
+      setLikeState(voteChange);
+      increment = voteChange;
+    } else if (likeState === voteChange) {
+      setLikeState(0);
+      increment = -voteChange;
+    } else {
+      setLikeState(voteChange);
+      increment = -likeState + voteChange;
+    }
+    setVotes((currentVote) => currentVote + increment);
+    increaseVotes(id, increment).catch(() => {
+      setVotes((currentVotes) => currentVotes - voteChange);
       setIsError(true);
     });
   };
@@ -65,12 +65,15 @@ const ReviewCard = ({
           </p>
         )}
         <p>Total likes: {votes}</p>
-        <button onClick={upVotesHandler} disabled={hasClicked && !isError}>
+        <button
+          className={likeState === 1 && !isError ? "active" : ""}
+          onClick={() => voteHandler(1)}
+        >
           Like
         </button>
         <button
-          onClick={downVotesHandler}
-          disabled={hasClickedDownVote && !isError}
+          className={likeState === -1 && !isError ? "active" : ""}
+          onClick={() => voteHandler(-1)}
         >
           Dislike
         </button>
