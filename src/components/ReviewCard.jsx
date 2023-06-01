@@ -17,19 +17,29 @@ const ReviewCard = ({
   const [votes, setVotes] = useState(vote);
   const [isError, setIsError] = useState(false);
   const [hasClicked, setHasClicked] = useState(false);
-
+  const [hasClickedDownVote, setHasClickedDownVote] = useState(false);
   useEffect(() => {
     fetchVotes(id).then((currVotes) => {
       setVotes(currVotes);
     });
   }, []);
 
-  const votesHandler = () => {
+  const upVotesHandler = () => {
     setVotes((currentVotes) => currentVotes + 1);
     setIsError(false);
     setHasClicked(true);
-    increaseVotes(id).catch(() => {
+    increaseVotes(id, 1).catch(() => {
       setVotes((currentVotes) => currentVotes - 1);
+      setIsError(true);
+    });
+  };
+
+  const downVotesHandler = () => {
+    setVotes((currentVotes) => currentVotes - 1);
+    setIsError(false);
+    setHasClickedDownVote(true);
+    increaseVotes(id, -1).catch(() => {
+      setVotes((currentVotes) => currentVotes + 1);
       setIsError(true);
     });
   };
@@ -54,8 +64,15 @@ const ReviewCard = ({
             Something went wrong! Refresh the page and try again
           </p>
         )}
-        <button onClick={votesHandler} disabled={hasClicked && !isError}>
-          votes: {votes}
+        <p>Total likes: {votes}</p>
+        <button onClick={upVotesHandler} disabled={hasClicked && !isError}>
+          Like
+        </button>
+        <button
+          onClick={downVotesHandler}
+          disabled={hasClickedDownVote && !isError}
+        >
+          Dislike
         </button>
         <button>Comments: {comment_count}</button>
       </div>

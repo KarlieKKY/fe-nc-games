@@ -28,7 +28,6 @@ export const fetchVotes = (review_id) => {
   });
 };
 
-export const increaseVotes = (review_id) => {
-  return gamesApi.patch(`/api/reviews/${review_id}`, { inc_votes: 1 });
-  // .catch((err) => console.log(err));
+export const increaseVotes = (review_id, inc_votes) => {
+  return gamesApi.patch(`/api/reviews/${review_id}`, { inc_votes });
 };
