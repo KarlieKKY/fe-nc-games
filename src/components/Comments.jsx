@@ -14,12 +14,12 @@ const Comments = () => {
       setIsLoading(false);
     });
   }, []);
-
+  console.log(currComments);
   if (isLoading) return <p>Loading for comments...</p>;
 
   return (
     <>
-      <PostComment />
+      <PostComment setCurrComments={setCurrComments} />
       <h3>All comments: </h3>
       {currComments.map((comment) => {
         return (
