@@ -14,7 +14,7 @@ const Comments = () => {
       setIsLoading(false);
     });
   }, []);
-  console.log(currComments);
+
   if (isLoading) return <p>Loading for comments...</p>;
 
   return (

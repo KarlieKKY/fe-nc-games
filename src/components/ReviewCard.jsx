@@ -15,7 +15,7 @@ const ReviewCard = ({
 
   return (
     <>
-      <Link to={`/reviews/${id}`} id={id}>
+      <Link to={`/reviews/${id}`}>
         <div>
           <p>{title}</p>
           <p>{formattedDate}</p>
