@@ -21,3 +21,7 @@ export const fetchAllComments = (id) => {
     return response.data;
   });
 };
+
+export const increaseVotes = (review_id, inc_votes) => {
+  return gamesApi.patch(`/api/reviews/${review_id}`, { inc_votes });
+};
