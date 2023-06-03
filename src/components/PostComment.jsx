@@ -10,20 +10,24 @@ const PostComment = ({ setCurrComments }) => {
   const { user } = useContext(UserContext);
   const [newComment, setNewComment] = useState("");
   const [isError, setIsError] = useState(false);
-  const [inputErrMsg, setInputErrMsg] = useState("");
   const [posting, setPosting] = useState(false);
+  const [message, setMessage] = useState({ type: "", content: "" });
 
   if (!user.authenticated) {
     return <p className="error">You must be logged in to leave a comment.</p>;
   }
 
+  const setMessageHandler = (type, content) => {
+    setMessage({ type, content });
+  };
+
   const handleSumbit = (event) => {
-    setIsError(false);
-    setInputErrMsg("");
     event.preventDefault();
+    setIsError(false);
+    setMessage({});
 
     if (isEmpty(newComment)) {
-      setInputErrMsg("Please enter a comment.");
+      setMessageHandler("error", "Please enter a comment.");
     }
     setPosting(true);
     const contents = { username: user.name, body: newComment };
@@ -32,6 +36,7 @@ const PostComment = ({ setCurrComments }) => {
       .then(({ newComment }) => {
         setCurrComments((currObj) => [newComment, ...currObj]);
         setNewComment("");
+        setMessageHandler("success", "Success! Your comment has been posted.");
       })
       .catch(() => {
         setIsError(true);
@@ -39,6 +44,9 @@ const PostComment = ({ setCurrComments }) => {
       .finally(() => {
         setPosting(false);
       });
+  };
+  const handleFocus = () => {
+    setMessage({});
   };
 
   return (
@@ -61,9 +69,16 @@ const PostComment = ({ setCurrComments }) => {
               onChange={(e) => {
                 setNewComment(e.target.value);
               }}
+              onFocus={handleFocus}
               required
             />
-            {inputErrMsg && <div style={{ color: "red" }}>{inputErrMsg}</div>}
+            {message.content && (
+              <div
+                style={{ color: message.type === "error" ? "red" : "green" }}
+              >
+                {message.content}
+              </div>
+            )}
           </fieldset>
           <button disabled={posting}>
             {posting ? "Posting..." : "Leave your comment"}
