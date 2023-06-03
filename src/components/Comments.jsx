@@ -19,7 +19,7 @@ const Comments = () => {
 
   return (
     <>
-      <PostComment />
+      <PostComment setCurrComments={setCurrComments} />
       <h3>All comments: </h3>
       {currComments.map((comment) => {
         return (
