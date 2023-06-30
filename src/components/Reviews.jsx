@@ -29,13 +29,7 @@ const Reviews = () => {
 
   return (
     <Box sx={{ padding: 6, backgroundColor: "backgroundColor.main" }}>
-      <Grid
-        container
-        // direction="column"
-        justifyContent="center"
-        alignItems="stretch"
-        gap={2}
-      >
+      <Grid container justifyContent="center" alignItems="stretch" gap={2}>
         {currReviews.map((review) => {
           return (
             <Grid
