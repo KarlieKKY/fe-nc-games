@@ -28,7 +28,12 @@ const Reviews = () => {
     );
 
   return (
-    <Box sx={{ padding: 6, backgroundColor: "backgroundColor.main" }}>
+    <Box
+      sx={{
+        padding: { xs: 1, md: 6 },
+        backgroundColor: "backgroundColor.main",
+      }}
+    >
       <Grid container justifyContent="center" alignItems="stretch" gap={2}>
         {currReviews.map((review) => {
           return (
